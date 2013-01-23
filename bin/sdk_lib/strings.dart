@@ -77,7 +77,7 @@ void main() {
   
   sb.add("Use a StringBuffer ");
   sb.addAll(["for ", "efficient ", "string ", "creation "]);
-  sb.add("if you are ").add("building lots of strings.");
+  sb..add("if you are ")..add("building lots of strings.");
   
   var fullString = sb.toString();
   

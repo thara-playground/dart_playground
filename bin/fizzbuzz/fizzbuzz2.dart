@@ -19,8 +19,8 @@ void withoutForLoop(int limit) {
     return src;
   }).map((i) {
     var sb = new StringBuffer()
-                  .add(i % 3 == 0 ? "Fizz" : "")
-                  .add(i % 5 == 0 ? "Buzz" : "");
+                  ..add(i % 3 == 0 ? "Fizz" : "")
+                  ..add(i % 5 == 0 ? "Buzz" : "");
     return sb.isEmpty ? "${i}" : sb.toString();
   }).forEach(print);
 }

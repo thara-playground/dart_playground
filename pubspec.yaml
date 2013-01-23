@@ -1,0 +1,7 @@
+name:  dart_playground
+description:  A sample application
+
+dependencies:
+  unittest: any
+  logging: any
+  intl : any

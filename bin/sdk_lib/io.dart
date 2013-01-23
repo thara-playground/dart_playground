@@ -44,7 +44,9 @@ void main() {
   };
   
   /* Writing file contents */
-  var logFile = new File('log.txt');
+  File dist = new File("dist");
+  dist.createSync();
+  var logFile = new File('dist/log.txt');
   var out = logFile.openOutputStream(FileMode.WRITE);
   out.writeString('FILE ACCESSED ${new Date.now()}');
   out.close();

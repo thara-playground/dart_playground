@@ -1,5 +1,5 @@
 
-
+import 'dart:async';
 
 void main() {
   
@@ -45,15 +45,15 @@ void main() {
   
   // Chaining multiple asynchronous methods
   result = longExpensiveSearch();
-  result.handleException((exception) => print("DOH!"));
+  result.catchError((exception) => print("DOH!"));
   
   result
-    .chain((value) {
+    .then((value) {
       var completer = new Completer();
       completer.complete("AAA");
       return completer.future;
     })
-    .chain((value) {
+    .then((value) {
       var completer = new Completer();
       completer.complete("BBB");
       return completer.future;
@@ -61,7 +61,7 @@ void main() {
     .then((value) => print("done!"));
   
   // Waiting for multiple futures
-  Futures.wait([result, result, result]).then((List values) {
+  Future.wait([result, result, result]).then((List values) {
     print("Done with all the long steps.");
   });
 }
@@ -98,20 +98,18 @@ class Process {
 
 class ProcessIterator implements Iterator<Process> {
   
-  Process next() {
-    // Return the next process if possiblel but if not:
-    throw new StateError("Bad state: No more elements");
+  Process get current {
+    return null;    
   }
   
-  bool get hasNext {
-    // True if calling next() would return a process
+  bool moveNext() {
     return false;
   }
 }
 
 // A mythical class lets you iterate through all processes.
 class Processes implements Iterable<Process> {
-  Iterator<Process> iterator() {
+  Iterator<Process> get iterator {
     return new ProcessIterator();
   }
 }

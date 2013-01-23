@@ -7,9 +7,9 @@ main() {
 //  exceptionInTransform();
 //  chainFuture();
 //  chainFuture2();
-//  waitFutures();
   
-  fluent();
+//  fluent();
+  waitFutures();
 }
 
 void fluent() {

@@ -68,8 +68,8 @@ class FizzBuzzIterator implements Iterator<String> {
   
   String next() {
     var sb = new StringBuffer()
-                  .add(this.current % 3 == 0 ? "Fizz" : "")
-                  .add(this.current % 5 == 0 ? "Buzz" : "");
+                  ..add(this.current % 3 == 0 ? "Fizz" : "")
+                  ..add(this.current % 5 == 0 ? "Buzz" : "");
     String str = sb.isEmpty ? "${this.current}" : sb.toString();
     this.current++;
     return str;
