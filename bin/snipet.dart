@@ -52,7 +52,7 @@ main () {
 
 List<Date> toDate(List<String> dateStrings, [onError(String)]) {
   var df = new DateFormat("yyyyMMdd");
-  return dateStrings.map((str) {
+  return dateStrings.mappedBy((str) {
     try {
       return df.parse(str);
     } catch(e) {

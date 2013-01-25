@@ -1,14 +1,16 @@
 
+import 'dart:async';
+
 main() {
   
-//  simpleCompleter();
-//  immediate();
-//  completeException();
-//  exceptionInTransform();
-//  chainFuture();
-//  chainFuture2();
+  simpleCompleter();
+  immediate();
+  completeException();
+  exceptionInTransform();
+  chainFuture();
+  chainFuture2();
   
-//  fluent();
+  fluent();
   waitFutures();
 }
 
@@ -29,7 +31,7 @@ void waitFutures() {
   final completerB = new Completer<String>();
   final completerC = new Completer<String>();
   
-  final Future future = Futures.wait([
+  final Future future = Future.wait([
     completerA.future, completerB.future, completerC.future
   ]);
   
@@ -38,75 +40,63 @@ void waitFutures() {
     list.forEach(print);
   });
   
-  print("Future Completion :${future.isComplete}");
   completerA.complete("Hello, Completer A");
-  print("Future Completion :${future.isComplete}");
   completerB.complete("Hello, Completer B");
-  print("Future Completion :${future.isComplete}");
   completerC.complete("Hello, Completer C");
-  print("Future Completion :${future.isComplete}");
 }
 
 void chainFuture2() {
   final completerA = new Completer<String>();
   final completerB = new Completer<String>();
-  final transformedFuture = completerA.future.chain((x) {
-    return completerB.future.transform((y) {
+  final transformedFuture = completerA.future.then((x) {
+    return completerB.future.then((y) {
       return "$x, $y!!!!!!!";
     });
   });
   
   completerA.complete("Hello");
   completerB.complete("Dart");
-  print(transformedFuture.value);
+  transformedFuture.then(print);
 }
 
 void chainFuture() {
   final completerA = new Completer<String>();
   final completerB = new Completer<String>();
   
-  final chain = completerA.future.chain((x) {
+  final chain = completerA.future.then((x) {
     return completerB.future;
   });
   
-  print("Chained Future Completion :${chain.isComplete}");
-  
   completerA.complete("Hello, Completer A");
-  print("Chained Future Completion :${chain.isComplete}");
-  
   completerB.complete("Hello, Completer B");
-  print("Chained Future Completion :${chain.isComplete}");
-  
-  print(chain.value);
+  chain.then(print);
 }
 
 void exceptionInTransform() {
   final completer = new Completer<String>();
-  final future = completer.future.transform((x){ throw new Exception("oh no!"); });
+  final future = completer.future.then((x){ throw new Exception("oh no!"); });
   
   completer.complete("Hello, Dart!!!!");
   
-  print(future.exception);
+  future.catchError(print);
   
   try {
-    print(future.value);
-  } on Exception catch(e) {
-    print(e);
+    future.then(print);
+  } on Exception catch(e, s) {
+    print(s);
   }
 }
 
 void completeException() {
   final completer = new Completer<String>();
-  final future = completer.future.transform((x) => "** $x **");
+  final future = completer.future.then((x) => "** $x **");
   
-  completer.completeException(new Exception("Oh no!"));
+  completer.completeError(new Exception("Oh no!"));
   
-  print(future.isComplete ? "Completed" : "Not Yet");
-  
-  print(future.exception);
+  future.catchError(print);
   
   try {
-    print(future.value);
+    future.then(print);
   } on Exception catch(e) {
     print(e);
   }
@@ -114,8 +104,6 @@ void completeException() {
 
 void immediate() {
   var future = new Future.immediate("Hello, Dart!!");
-  
-  print(future.isComplete ? "Completed" : "Not Yet");
   
   var value = null;
   future.then((x) => value = x);
@@ -125,11 +113,9 @@ void immediate() {
 
 void simpleCompleter() {
   final completer = new Completer<String>();
-  final future = completer.future.transform((x) => "** $x **");
-  
-  print(future.isComplete ? "Completed" : "Not Yet");
+  final future = completer.future.then((x) => "** $x **");
   
   completer.complete("Hello, Dart!");
   
-  print(future.value);
+  future.then(print);
 }

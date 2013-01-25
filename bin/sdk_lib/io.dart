@@ -1,4 +1,5 @@
 
+import 'dart:async';
 import 'dart:io';
 
 void main() {
@@ -26,7 +27,7 @@ void main() {
   
   /* Handling errors */
   Future readFile = config.readAsString();
-  readFile.handleException((e) {
+  readFile.catchError((e) {
     print(e);
     // ...Other error handling goes here...
     return true;  // We've handled the exception; no need to propagate it.

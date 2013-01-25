@@ -55,25 +55,25 @@ class FizzBuzzIterable implements Iterable<String> {
   final int limit;
   FizzBuzzIterable(this.limit);
   
-  Iterator<String> iterator() {
+  Iterator<String> get iterator {
     return new FizzBuzzIterator(this.limit);
   }
 }
 
 class FizzBuzzIterator implements Iterator<String> {
   final int limit;
-  int current;
+  int _current;
   
-  FizzBuzzIterator(this.limit) : current = 1;
+  FizzBuzzIterator(this.limit) : _current = 1;
   
-  String next() {
+  String get current {
     var sb = new StringBuffer()
-                  ..add(this.current % 3 == 0 ? "Fizz" : "")
-                  ..add(this.current % 5 == 0 ? "Buzz" : "");
-    String str = sb.isEmpty ? "${this.current}" : sb.toString();
-    this.current++;
+                  ..add(this._current % 3 == 0 ? "Fizz" : "")
+                  ..add(this._current % 5 == 0 ? "Buzz" : "");
+    String str = sb.isEmpty ? "${this._current}" : sb.toString();
+    this._current++;
     return str;
   }
   
-  bool get hasNext => current <= this.limit;
+  bool moveNext() => _current <= this.limit;
 }

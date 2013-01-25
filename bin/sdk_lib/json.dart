@@ -1,4 +1,4 @@
-import 'dart:json';
+import 'dart:json' as json;
 
 void main() {
   
@@ -13,7 +13,7 @@ void main() {
   ]
   ''';
   
-  var scores = JSON.parse(jsonString);
+  var scores = json.parse(jsonString);
   assert(scores is List);
   
   var fisrtScore = scores[0];
@@ -27,5 +27,5 @@ void main() {
     {'score': 100, 'overtime': true, 'special_guest': null},
   ];
   
-  print(JSON.stringify(scores));
+  print(json.stringify(scores));
 }
